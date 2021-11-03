@@ -12,50 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef SUBPUB_EXAMPLE__SUBPUB_EXAMPLE_HPP_ 
-#define SUBPUB_EXAMPLE__SUBPUB_EXAMPLE_HPP_
+#ifndef NODE_TEMPLATES__SUBPUB_EXAMPLE_HPP_
+#define NODE_TEMPLATES__SUBPUB_EXAMPLE_HPP_
 
 #include <chrono>
+#include <functional>
 #include <memory>
 #include <string>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-using namespace std::chrono_literals;
+// using namespace std::chrono_literals;
 
 namespace subpub_example
 {
+
 class SubpubExample : public rclcpp::Node
 {
 public:
-  explicit SubpubExample();
-  // ~SubpubExample();
-protected:
+  SubpubExample();
+
+private:
+  // functions
   void timer_callback();
 
   void my_topic_callback(const std_msgs::msg::String::SharedPtr msg) const;
-
-  // variables that are used in the code
 
   // timer
   rclcpp::TimerBase::SharedPtr timer_;
 
   // publishers
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
-  
+
   // subscriptions
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
 
+  // variables
   size_t count_;
-
-  // initialize variables for parameters
-  // double controller_frequency_;
-  // double min_x_velocity_threshold_;
-  // double min_y_velocity_threshold_;
-  // double min_theta_velocity_threshold_;
+  std::string parameter_string_;
 };
 
 }  // namespace subpub_example
 
-#endif  // SUBPUB_EXAMPLE__SUBPUB_EXAMPLE_HPP_
+#endif  // NODE_TEMPLATES__SUBPUB_EXAMPLE_HPP_

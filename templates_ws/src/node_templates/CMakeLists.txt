@@ -28,7 +28,7 @@ include_directories(
 )
 
 # this needs to be done for every new node
-add_executable(subpub_example src/main.cpp)
+add_executable(subpub_example src/main.cpp src/subpub_example.cpp)
 ament_target_dependencies(subpub_example rclcpp std_msgs)
 
 # add node here

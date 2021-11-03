@@ -15,13 +15,11 @@
 #include <memory>
 
 #include "node_templates/subpub_example.hpp"
-#include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
-  auto node = std::make_shared<subpub_example::SubpubExample>();
-  rclcpp::spin(node);
+  rclcpp::spin(std::make_shared<subpub_example::SubpubExample>());
   rclcpp::shutdown();
   return 0;
 }
