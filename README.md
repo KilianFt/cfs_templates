@@ -1,26 +1,26 @@
 # Templates for cfs
 
 ## Demo
-'''
+```
 ros2 run node_templates simple_publisher
 
 ros2 topic echo /topic2
 
 ros2 param set /simple_publisher my_text "Hey you"
-'''
+```
 In new terminal
-'''
+```
 ros2 run node_templates subpub_example
-'''
+```
 In another terminal
-'''
+```
 ros2 run node_templates timesync
-'''
+```
 
 Several nodes can be started together like in
-'''
+```
 ros2 launch node_templates launch.py
-'''
+```
 
 ## Included features
 ### linter
@@ -74,6 +74,6 @@ https://answers.ros.org/question/361637/using-c-message-filters-in-ros2/?answer=
         - should be in own package
     - performance tests?
 
-- source file with aliases?
-    - export ROS_DOMAIN_ID= ???
+- source file with aliases ?
+    - export ROS_DOMAIN_ID = ?
 - setup git to run automatic test before commit
