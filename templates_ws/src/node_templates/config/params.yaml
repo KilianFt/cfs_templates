@@ -2,6 +2,17 @@ subpub_example:
   ros__parameters:
     my_text: "Hello CFS"
     my_publisher:
-      topic: "topic1"
+      topic: "topic2"
     my_subscription:
       topic: "topic1"
+simple_publisher:
+  ros__parameters:
+    publisher:
+      topic: "topic1"
+    my_text: "Ciao CFS"
+timesync_subscription:
+  ros__parameters:
+    subsciption1:
+      topic: "topic1"
+    subscription2:
+      topic: "topic2"

@@ -24,21 +24,37 @@ namespace simple_publisher
 SimplePublisher::SimplePublisher()
 : Node("simple_publisher"), count_(0)  // initialize variable count_ as 0
 {
-  RCLCPP_INFO(get_logger(), "Creating subpub example");
+  RCLCPP_INFO(get_logger(), "Creating simple publisher");
 
-  publisher_ = this->create_publisher<std_msgs::msg::String>("pub_topic", 10);
+  SimplePublisher::init_parameters();
+
+  publisher_ = this->create_publisher<std_msgs::msg::String>(pub_topic_name_, 10);
 
   // time that executes time_callback twice every second
   timer_ = this->create_wall_timer(
-    700ms, std::bind(&SimplePublisher::timer_callback, this));
+    1000ms, std::bind(&SimplePublisher::timer_callback, this));
+}
+
+void SimplePublisher::init_parameters()
+{
+  // declare parameter with default values
+  this->declare_parameter("publisher.topic", "topic1");
+  this->declare_parameter("my_text", "Hello World");
+
+  // get global values, usually set by yaml file. They will overwrite the default values if present
+  this->get_parameter("publisher.topic", pub_topic_name_);
+  this->get_parameter("my_text", my_text_);
 }
 
 // this function is called by timer
 void SimplePublisher::timer_callback()
 {
+  // get new ROS parameter
+  this->get_parameter("my_text", my_text_);
+
   // create message
   auto message = std_msgs::msg::String();
-  message.data = "Hello CFS " + std::to_string(count_++);
+  message.data = my_text_ + " " + std::to_string(count_++);
 
   // publish message
   RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());

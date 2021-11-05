@@ -37,7 +37,22 @@ def generate_launch_description():
         name='subpub_example',
         parameters=[config]
     )
+    simple_pub_node = launch_ros.actions.Node(
+        package='node_templates',
+        executable='simple_publisher',
+        output='screen',
+        name='simple_publisher',
+        parameters=[config]
+    )
+    timesync_node = launch_ros.actions.Node(
+        package='node_templates',
+        executable='timesync',
+        output='screen',
+        name='timesync',
+        parameters=[config]
+    )
 
     ld.add_action(example_node)
-
+    ld.add_action(simple_pub_node)
+    ld.add_action(timesync_node)
     return ld

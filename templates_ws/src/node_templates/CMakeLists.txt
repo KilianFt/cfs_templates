@@ -20,6 +20,8 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(message_filters REQUIRED)
+find_package(cfs_msgs REQUIRED)
+
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -30,19 +32,27 @@ include_directories(
 
 # this needs to be done for every new node
 add_executable(subpub_example src/node_example.cpp src/subpub_example.cpp)
-ament_target_dependencies(subpub_example rclcpp std_msgs)
+ament_target_dependencies(subpub_example rclcpp std_msgs cfs_msgs)
 
 add_executable(simple_publisher src/simple_publisher_node.cpp src/simple_publisher.cpp)
 ament_target_dependencies(simple_publisher rclcpp std_msgs)
 
-# add_executable(timesync src/timesync_subscription_node.cpp src/timesync_subscription.cpp)
-# ament_target_dependencies(timesync rclcpp std_msgs message_filters)
+add_executable(server src/service_server_example.cpp)
+ament_target_dependencies(server rclcpp cfs_msgs)
+
+add_executable(client src/service_client_example.cpp)
+ament_target_dependencies(client rclcpp cfs_msgs)
+
+add_executable(timesync src/timesync_subscription_node.cpp src/timesync_subscription.cpp)
+ament_target_dependencies(timesync rclcpp std_msgs message_filters)
 
 # add node here
 install(TARGETS
   subpub_example
   simple_publisher
-  # timesync
+  server
+  client
+  timesync
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

@@ -22,6 +22,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "cfs_msgs/srv/combine_strings.hpp"
 
 namespace subpub_example
 {
@@ -34,10 +35,9 @@ public:
 private:
   // functions
   void timer_callback();
-
   void init_parameters();
-
   void my_topic_callback(const std_msgs::msg::String::SharedPtr msg) const;
+  std::string call_service(std::string a, std::string b);
 
   // timer
   rclcpp::TimerBase::SharedPtr timer_;

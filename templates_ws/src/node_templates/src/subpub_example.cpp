@@ -46,11 +46,11 @@ SubpubExample::SubpubExample()
 void SubpubExample::init_parameters()
 {
   // declare parameter with default values
-  this->declare_parameter("my_text", "Hello World");
-  this->declare_parameter("my_publisher.topic", "topic1");
+  this->declare_parameter("my_text", "Hello You");
+  this->declare_parameter("my_publisher.topic", "topic2");
   this->declare_parameter("my_subscription.topic", "topic1");
 
-  // get values from yaml file, they will overwrite the default values if present
+  // get global values, usually set by yaml file. They will overwrite the default values if present
   this->get_parameter("my_text", my_text_);
   this->get_parameter("my_publisher.topic", my_pub_topic_name_);
   this->get_parameter("my_subscription.topic", my_sub_topic_name_);
@@ -64,7 +64,7 @@ void SubpubExample::timer_callback()
 
   // create message
   auto message = std_msgs::msg::String();
-  message.data = my_text_ + std::to_string(count_++);
+  message.data = my_text_ + " " + std::to_string(count_++);
 
   // publish message
   RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());

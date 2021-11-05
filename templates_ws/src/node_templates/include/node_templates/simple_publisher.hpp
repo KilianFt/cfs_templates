@@ -34,6 +34,7 @@ public:
 private:
   // functions
   void timer_callback();
+  void init_parameters();
 
   // timer
   rclcpp::TimerBase::SharedPtr timer_;
@@ -43,6 +44,8 @@ private:
 
   // variables
   size_t count_;
+  std::string pub_topic_name_;
+  std::string my_text_;
 };
 
 }  // namespace simple_publisher
