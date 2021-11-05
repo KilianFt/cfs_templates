@@ -23,32 +23,48 @@ namespace subpub_example
 {
 
 SubpubExample::SubpubExample()
-: Node("subpub_example"), count_(0)  // initialize variable count_ as 0
+: Node("subpub_example"),
+  count_(0)  // initialize variable count_ as 0
 {
   RCLCPP_INFO(get_logger(), "Creating subpub example");
 
-  // declare a ROS parameter, it can be used in any node
-  this->declare_parameter<std::string>("my_parameter_name", "Hello CFS");
+  // init ROS parameter
+  SubpubExample::init_parameters();
 
-  publisher_ = this->create_publisher<std_msgs::msg::String>("my_topic", 10);
+  // create a publisher
+  publisher_ = this->create_publisher<std_msgs::msg::String>(my_pub_topic_name_, 10);
 
+  // create a subscription
   subscription_ = this->create_subscription<std_msgs::msg::String>(
-    "my_topic", 10, std::bind(&SubpubExample::my_topic_callback, this, _1));
+    my_sub_topic_name_, 10, std::bind(&SubpubExample::my_topic_callback, this, _1));
 
   // time that executes time_callback twice every second
   timer_ = this->create_wall_timer(
     500ms, std::bind(&SubpubExample::timer_callback, this));
 }
 
+void SubpubExample::init_parameters()
+{
+  // declare parameter with default values
+  this->declare_parameter("my_text", "Hello World");
+  this->declare_parameter("my_publisher.topic", "topic1");
+  this->declare_parameter("my_subscription.topic", "topic1");
+
+  // get values from yaml file, they will overwrite the default values if present
+  this->get_parameter("my_text", my_text_);
+  this->get_parameter("my_publisher.topic", my_pub_topic_name_);
+  this->get_parameter("my_subscription.topic", my_sub_topic_name_);
+}
+
 // this function is called by timer
 void SubpubExample::timer_callback()
 {
-  // get ROS parameter
-  this->get_parameter("my_parameter_name", parameter_string_);
+  // get new ROS parameter
+  this->get_parameter("my_text", my_text_);
 
   // create message
   auto message = std_msgs::msg::String();
-  message.data = parameter_string_ + std::to_string(count_++);
+  message.data = my_text_ + std::to_string(count_++);
 
   // publish message
   RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());

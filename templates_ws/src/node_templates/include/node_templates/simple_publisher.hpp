@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef NODE_TEMPLATES__SUBPUB_EXAMPLE_HPP_
-#define NODE_TEMPLATES__SUBPUB_EXAMPLE_HPP_
+#ifndef NODE_TEMPLATES__SIMPLE_PUBLISHER_HPP_
+#define NODE_TEMPLATES__SIMPLE_PUBLISHER_HPP_
 
 #include <chrono>
 #include <functional>
@@ -23,21 +23,17 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-namespace subpub_example
+namespace simple_publisher
 {
 
-class SubpubExample : public rclcpp::Node
+class SimplePublisher : public rclcpp::Node
 {
 public:
-  SubpubExample();
+  SimplePublisher();
 
 private:
   // functions
   void timer_callback();
-
-  void init_parameters();
-
-  void my_topic_callback(const std_msgs::msg::String::SharedPtr msg) const;
 
   // timer
   rclcpp::TimerBase::SharedPtr timer_;
@@ -45,16 +41,10 @@ private:
   // publishers
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
 
-  // subscriptions
-  rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
-
   // variables
   size_t count_;
-  std::string my_text_;
-  std::string my_pub_topic_name_;
-  std::string my_sub_topic_name_;
 };
 
-}  // namespace subpub_example
+}  // namespace simple_publisher
 
-#endif  // NODE_TEMPLATES__SUBPUB_EXAMPLE_HPP_
+#endif  // NODE_TEMPLATES__SIMPLE_PUBLISHER_HPP_

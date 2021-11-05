@@ -1,0 +1,7 @@
+subpub_example:
+  ros__parameters:
+    my_text: "Hello CFS"
+    my_publisher:
+      topic: "topic1"
+    my_subscription:
+      topic: "topic1"

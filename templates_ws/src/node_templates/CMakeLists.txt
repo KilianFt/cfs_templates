@@ -19,6 +19,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(message_filters REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -28,12 +29,20 @@ include_directories(
 )
 
 # this needs to be done for every new node
-add_executable(subpub_example src/main.cpp src/subpub_example.cpp)
+add_executable(subpub_example src/node_example.cpp src/subpub_example.cpp)
 ament_target_dependencies(subpub_example rclcpp std_msgs)
+
+add_executable(simple_publisher src/simple_publisher_node.cpp src/simple_publisher.cpp)
+ament_target_dependencies(simple_publisher rclcpp std_msgs)
+
+# add_executable(timesync src/timesync_subscription_node.cpp src/timesync_subscription.cpp)
+# ament_target_dependencies(timesync rclcpp std_msgs message_filters)
 
 # add node here
 install(TARGETS
   subpub_example
+  simple_publisher
+  # timesync
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
@@ -46,5 +55,17 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+# Install launch files.
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+
+# Install config files
+install(DIRECTORY
+  config
+  DESTINATION share/${PROJECT_NAME}
+)
 
 ament_package()
